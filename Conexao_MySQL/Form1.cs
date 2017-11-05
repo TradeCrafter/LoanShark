@@ -214,17 +214,20 @@ namespace Conexao_MySQL
 
         private void DGEmprestimo_Click(object sender, EventArgs e)
         {
+            Decimal resultado;
+            decimal cell1 = Convert.ToDecimal(DGEmprestimo.CurrentRow.Cells[4].Value);
+            decimal cell2 = Convert.ToDecimal(DGEmprestimo.CurrentRow.Cells[2].Value);
+            resultado = cell1 + cell2;
+
             if (DGEmprestimo.CurrentRow.Cells[0].Value.ToString() != null)
             {
                 textBox1.Text = DGEmprestimo.CurrentRow.Cells[0].Value.ToString();
                 txtNome.Text = DGEmprestimo.CurrentRow.Cells[1].Value.ToString();
-                txtQuita.Text = DGEmprestimo.CurrentRow.Cells[2].Value.ToString();
+                txtQuita.Text = Convert.ToString(resultado);
                 textJuro.Text = DGEmprestimo.CurrentRow.Cells[4].Value.ToString();
                 textBox2.Text = DGEmprestimo.CurrentRow.Cells[8].Value.ToString();
                 // textNome2.Text = DGClientes.CurrentRow.Cells[1].Value.ToString();
                 txtNome3.Text = DGEmprestimo.CurrentRow.Cells[1].Value.ToString();
-
-
             }
         }
 
