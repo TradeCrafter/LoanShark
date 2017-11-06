@@ -15,7 +15,7 @@ namespace Conexao_MySQL
         private void modoNavegacao() // desabilitando os itens de edicao
         {
             txtNome.Enabled = false;
-          //  textNome2.Enabled = false;
+            //  textNome2.Enabled = false;
             txtEndereco.Enabled = false;
             txtNome3.Enabled = false;
             txtQuita.Enabled = false;
@@ -77,7 +77,8 @@ namespace Conexao_MySQL
             DGClientes.DataSource = clienteController.getClientes(); //preenchendo o DataGrid
             DGEmprestimo.DataSource = emprestimoController.getEmprestimo();
             DGDevedor.DataSource = emprestimoController.getDevedor();
-            DGSumario1.DataSource = emprestimoController.getSumario();
+            DGSumario1.DataSource = emprestimoController.getSumario1();
+            DGSumario2.DataSource = emprestimoController.getSumario2();
         }
 
         public Form1()
@@ -92,8 +93,12 @@ namespace Conexao_MySQL
             emprestimoController emprestimoController1 = new emprestimoController();
             DGDevedor.DataSource = emprestimoController1.getDevedor();
             emprestimoController emprestimoController2 = new emprestimoController();
-            DGSumario1.DataSource = emprestimoController2.getSumario();
-            
+            DGSumario1.DataSource = emprestimoController2.getSumario1();
+            emprestimoController emprestimoController3 = new emprestimoController();
+            DGSumario2.DataSource = emprestimoController3.getSumario2();
+            emprestimoController emprestimoController4 = new emprestimoController();
+            DGGiro.DataSource = emprestimoController3.getGiro();
+
 
         }
 
@@ -115,13 +120,14 @@ namespace Conexao_MySQL
                 }
                 else //aí é salvar alguma edição
                 {
-                    clientes editarCliente = new clientes(Convert.ToInt32(txtID.Text),txtNome.Text, txtEndereco.Text, maskCEP.Text);
+                    clientes editarCliente = new clientes(Convert.ToInt32(txtID.Text), txtNome.Text, txtEndereco.Text, maskCEP.Text);
                     clienteController.AtualizarCliente(editarCliente); //efetuando a atualização do registro
                 }
                 MessageBox.Show("Dados registrados com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnLimpar.PerformClick(); //chamando o evento click do botao limpar
                 modoNavegacao(); //desabilitando os campos apos salvar
-            }catch(Exception erro)
+            }
+            catch (Exception erro)
             {//se der erro
                 MessageBox.Show("Houve o seguinte erro: " + erro.ToString(), "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -164,7 +170,7 @@ namespace Conexao_MySQL
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if(txtID.Text == "") //testando se há registro selecionado
+            if (txtID.Text == "") //testando se há registro selecionado
             {
                 MessageBox.Show("Selecione um registro na tabela.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return; //sai do IF
@@ -205,15 +211,16 @@ namespace Conexao_MySQL
             emprestimoController emprestimoController = new emprestimoController();
             emprestimo novoEmprestimo = new emprestimo(textNome2.Text, Convert.ToDecimal(txtValor.Text), Convert.ToDecimal(txtJuros.Text), Convert.ToDateTime(txtDia.Text), txtStatus.Text);
             emprestimoController.IncluirNovoEmprestimo(novoEmprestimo); //cadastrando novo cliente
-       
+
             MessageBox.Show("Dados registrados com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                btnLimpar.PerformClick(); //chamando o evento click do botao limpar
-                modoNavegacao(); //desabilitando os campos apos salvar
+            btnLimpar.PerformClick(); //chamando o evento click do botao limpar
+            modoNavegacao(); //desabilitando os campos apos salvar
             DGEmprestimo.DataSource = emprestimoController.getEmprestimo();
         }
 
         private void DGEmprestimo_Click(object sender, EventArgs e)
         {
+
             Decimal resultado;
             decimal cell1 = Convert.ToDecimal(DGEmprestimo.CurrentRow.Cells[4].Value);
             decimal cell2 = Convert.ToDecimal(DGEmprestimo.CurrentRow.Cells[2].Value);
@@ -228,6 +235,8 @@ namespace Conexao_MySQL
                 textBox2.Text = DGEmprestimo.CurrentRow.Cells[8].Value.ToString();
                 // textNome2.Text = DGClientes.CurrentRow.Cells[1].Value.ToString();
                 txtNome3.Text = DGEmprestimo.CurrentRow.Cells[1].Value.ToString();
+
+
             }
         }
 
@@ -268,13 +277,29 @@ namespace Conexao_MySQL
         {
 
         }
-              
-        private void DGSumario1_Click(object sender, EventArgs e)
+
+        private void DGDevedor_Click(object sender, EventArgs e)
+        {
+            if (DGDevedor.CurrentRow.Cells[0].Value.ToString() != null)
+            {
+                DGDevedor.CurrentRow.Cells[0].Value.ToString();
+                DGDevedor.CurrentRow.Cells[1].Value.ToString();
+            }
+        }
+        private void DGSumario2_Click(object sender, EventArgs e)
         {
             if (DGSumario1.CurrentRow.Cells[0].Value.ToString() != null)
             {
                 DGSumario1.CurrentRow.Cells[0].Value.ToString();
                 DGSumario1.CurrentRow.Cells[1].Value.ToString();
+            }
+        }
+        private void DGGiro_Click(object sender, EventArgs e)
+        {
+            if (DGGiro.CurrentRow.Cells[0].Value.ToString() != null)
+            {
+                DGGiro.CurrentRow.Cells[0].Value.ToString();
+                DGGiro.CurrentRow.Cells[1].Value.ToString();
             }
         }
 

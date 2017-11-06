@@ -149,12 +149,12 @@ namespace Conexao_MySQL
             }
         }
         //
-        public DataTable getSumario()
+        public DataTable getSumario1()
         {
             MySqlConnection novaConexao = new MySqlConnection(Conexao); //criando um objeto para manipular a conexao com o BD
             MySqlCommand comando = novaConexao.CreateCommand(); //aplica comandos sql atrelado a conexao
             MySqlDataAdapter dataAdapter; //vai intermediar a base de dados e a aplicação
-            comando.CommandText = "SELECT SUM(lucro)LUCRO, SUM(Valor)VALOR_INVESTIDO FROM emprestimo"; //comando que vamos executar na base de dados
+            comando.CommandText = "SELECT SUM(lucro)LUCRO FROM emprestimo WHERE status = 'QUITADO'"; //comando que vamos executar na base de dados
             try
             {
                 novaConexao.Open(); //abrindo a conexao com a base de dados
@@ -173,6 +173,57 @@ namespace Conexao_MySQL
                 novaConexao.Close(); //encerrando a conexao com o BD
             }
         }
+
+        public DataTable getGiro()
+        {
+            MySqlConnection novaConexao = new MySqlConnection(Conexao); //criando um objeto para manipular a conexao com o BD
+            MySqlCommand comando = novaConexao.CreateCommand(); //aplica comandos sql atrelado a conexao
+            MySqlDataAdapter dataAdapter; //vai intermediar a base de dados e a aplicação
+            comando.CommandText = "SELECT SUM(valor)CAPITAL_GIRO FROM emprestimo WHERE status = 'QUITADO'"; //comando que vamos executar na base de dados
+            try
+            {
+                novaConexao.Open(); //abrindo a conexao com a base de dados
+                comando = new MySqlCommand(comando.CommandText, novaConexao); //instanciando o objeto com o SQL e a String de conexao
+                dataAdapter = new MySqlDataAdapter(comando); //instanciando o DataAdapter passando as informações de interação com o BD
+                DataTable dtGiro = new DataTable(); //criando um DataTable para alocar as informações na memória
+                dataAdapter.Fill(dtGiro); //atualizando o conteudo do DataTable com o que veio da execucao do SQL
+                return dtGiro;
+            }
+            catch (MySqlException erro)
+            {
+                throw new ApplicationException(erro.ToString()); //se der erro, mostra
+            }
+            finally
+            {
+                novaConexao.Close(); //encerrando a conexao com o BD
+            }
+        }
+
+        public DataTable getSumario2()
+        {
+            MySqlConnection novaConexao = new MySqlConnection(Conexao); //criando um objeto para manipular a conexao com o BD
+            MySqlCommand comando = novaConexao.CreateCommand(); //aplica comandos sql atrelado a conexao
+            MySqlDataAdapter dataAdapter; //vai intermediar a base de dados e a aplicação
+            comando.CommandText = "SELECT SUM(Valor)VALOR_INVESTIDO FROM emprestimo WHERE status = 'ATIVO'"; //comando que vamos executar na base de dados
+            try
+            {
+                novaConexao.Open(); //abrindo a conexao com a base de dados
+                comando = new MySqlCommand(comando.CommandText, novaConexao); //instanciando o objeto com o SQL e a String de conexao
+                dataAdapter = new MySqlDataAdapter(comando); //instanciando o DataAdapter passando as informações de interação com o BD
+                DataTable dtSumario2 = new DataTable(); //criando um DataTable para alocar as informações na memória
+                dataAdapter.Fill(dtSumario2); //atualizando o conteudo do DataTable com o que veio da execucao do SQL
+                return dtSumario2;
+            }
+            catch (MySqlException erro)
+            {
+                throw new ApplicationException(erro.ToString()); //se der erro, mostra
+            }
+            finally
+            {
+                novaConexao.Close(); //encerrando a conexao com o BD
+            }
+        }
+
         //selecionando os registros da base de dados:
         public DataTable getEmprestimo()
         {

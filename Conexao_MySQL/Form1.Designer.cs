@@ -1,4 +1,7 @@
-﻿namespace Conexao_MySQL
+﻿using System;
+using System.Windows.Forms;
+
+namespace Conexao_MySQL
 {
     partial class Form1
     {
@@ -87,6 +90,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.DGSumario1 = new System.Windows.Forms.DataGridView();
+            this.DGSumario2 = new System.Windows.Forms.DataGridView();
+            this.DGGiro = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGClientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGEmprestimo)).BeginInit();
@@ -98,6 +103,8 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGSumario1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGSumario2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGGiro)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -614,11 +621,17 @@
             // 
             // DGDevedor
             // 
+            this.DGDevedor.AllowUserToAddRows = false;
+            this.DGDevedor.AllowUserToDeleteRows = false;
             this.DGDevedor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGDevedor.Location = new System.Drawing.Point(2, 25);
             this.DGDevedor.Name = "DGDevedor";
+            this.DGDevedor.ReadOnly = true;
+            this.DGDevedor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGDevedor.Size = new System.Drawing.Size(399, 189);
             this.DGDevedor.TabIndex = 17;
+           // this.DGDevedor.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGDevedor_CellContentClick);
+            this.DGDevedor.Click += new System.EventHandler(this.DGDevedor_Click);
             // 
             // tabControl1
             // 
@@ -627,7 +640,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 372);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(415, 246);
+            this.tabControl1.Size = new System.Drawing.Size(518, 246);
             this.tabControl1.TabIndex = 18;
             // 
             // tabPage1
@@ -643,22 +656,52 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.DGGiro);
+            this.tabPage2.Controls.Add(this.DGSumario2);
             this.tabPage2.Controls.Add(this.DGSumario1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(407, 220);
+            this.tabPage2.Size = new System.Drawing.Size(510, 220);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "SUMÁRIO";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // DGSumario1
             // 
+            this.DGSumario1.AllowUserToAddRows = false;
+            this.DGSumario1.AllowUserToDeleteRows = false;
             this.DGSumario1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGSumario1.Location = new System.Drawing.Point(25, 37);
+            this.DGSumario1.Location = new System.Drawing.Point(6, 37);
             this.DGSumario1.Name = "DGSumario1";
-            this.DGSumario1.Size = new System.Drawing.Size(356, 150);
+            this.DGSumario1.ReadOnly = true;
+            this.DGSumario1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DGSumario1.Size = new System.Drawing.Size(154, 150);
             this.DGSumario1.TabIndex = 0;
+           // this.DGSumario1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGClientes_CellContentClick);
+        //    this.DGSumario1.Click += new System.EventHandler(this.DGSumario1_Click);
+            // 
+            // DGSumario2
+            // 
+            this.DGSumario2.AllowUserToAddRows = false;
+            this.DGSumario2.AllowUserToDeleteRows = false;
+            this.DGSumario2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGSumario2.Location = new System.Drawing.Point(177, 37);
+            this.DGSumario2.Name = "DGSumario2";
+            this.DGSumario2.ReadOnly = true;
+            this.DGSumario2.Size = new System.Drawing.Size(147, 150);
+            this.DGSumario2.TabIndex = 1;
+           // this.DGSumario2.CellContentClick += new DataGridViewCellEventHandler(DGSumario2_CellContentClick);
+            this.DGSumario2.Click += new System.EventHandler(this.DGSumario2_Click);
+            // 
+            // DGGiro
+            // 
+            this.DGGiro.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGGiro.Location = new System.Drawing.Point(343, 37);
+            this.DGGiro.Name = "DGGiro";
+            this.DGGiro.Size = new System.Drawing.Size(152, 150);
+            this.DGGiro.TabIndex = 2;
+        //    this.DGGiro.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGGiro_CellContentClick);
             // 
             // Form1
             // 
@@ -700,9 +743,16 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGSumario1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGSumario2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGGiro)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void DGSumario2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -765,6 +815,8 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView DGSumario1;
+        private System.Windows.Forms.DataGridView DGSumario2;
+        private System.Windows.Forms.DataGridView DGGiro;
     }
 }
 
